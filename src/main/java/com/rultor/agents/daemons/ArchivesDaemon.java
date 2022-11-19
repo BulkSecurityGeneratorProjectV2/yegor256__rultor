@@ -45,6 +45,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Date;
 import java.util.logging.Level;
 import javax.ws.rs.core.MediaType;
@@ -88,7 +89,7 @@ public final class ArchivesDaemon extends AbstractAgent {
     @Override
     public Iterable<Directive> process(final XML xml) throws IOException {
         final Shell shell = new TalkShells(xml).get();
-        final File file = File.createTempFile("rultor", ".log");
+        final File file = Files.createTempFile( "rultor", ".log" ).toFile();
         final String dir = xml.xpath("/talk/daemon/dir/text()").get(0);
         new Shell.Safe(shell).exec(
             String.join(

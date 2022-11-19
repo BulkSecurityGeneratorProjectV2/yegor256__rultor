@@ -34,6 +34,7 @@ import com.rultor.spi.Talk;
 import com.rultor.spi.Talks;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.MatcherAssert;
@@ -64,9 +65,7 @@ public final class TkDaemonTest {
         final String name = "test";
         talks.create(name, Talk.TEST_NAME);
         final Talk talk = talks.get(name);
-        final File tail = File.createTempFile(
-            TkDaemonTest.class.getCanonicalName(), ".txt"
-        );
+        final File tail = Files.createTempFile( TkDaemonTest.class.getCanonicalName(), ".txt" ).toFile();
         final String content = "1 < привет > тебе от меня";
         FileUtils.writeStringToFile(tail, content, StandardCharsets.UTF_8);
         talk.modify(
